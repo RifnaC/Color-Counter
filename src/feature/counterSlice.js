@@ -21,14 +21,14 @@ const counterSlice = createSlice({
             if (action.payload >= 10) {
                 state.error = "Value cannot be greater than 10";
             } else {
-                state.value = action.payload;
+                state.value += action.payload;
             }
         },
         decrementByValue: (state, action) => {
             if(state.value < 1 ){
                 state.error = "Value cannot be less than 0";            
             }else{
-                if(action.payload <= 10){
+                if(action.payload >= 10){
                     state.error = "Value cannot be greater than 10";
                 }else{
                     state.value -= action.payload
