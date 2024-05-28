@@ -4,34 +4,46 @@ const counterSlice = createSlice({
     name: 'counter',
     initialState: {
         value: 0,
-        color: "green"
+        error: ""
     },
     reducers: {
         increment: (state) => {
             state.value += 1
         },
         decrement: (state) => {
-            state.value -= 1
+            if(state.value < 1 ){
+                state.error = "Value cannot be less than 0";
+            }else{
+                state.value -= 1;
+            }
         },
         incrementByValue: (state, action) => {
-            state.value += action.payload
-        },
-        changeColor: (state, action) => {
-            if (state.value >= 0 && state.value <= 10) {
-                state.color = 'green'
-                
-            }else if (state.value >= 11 && state.value <= 20) {
-                state.color = 'yellow'
+            if (action.payload >= 10) {
+                state.error = "Value cannot be greater than 10";
             } else {
-                state.color = 'red'
+                state.value = action.payload;
             }
-            state.value += action.payload
+        },
+        decrementByValue: (state, action) => {
+            if(state.value < 1 ){
+                state.error = "Value cannot be less than 0";            
+            }else{
+                if(action.payload <= 10){
+                    state.error = "Value cannot be greater than 10";
+                }else{
+                    state.value -= action.payload
+                }
+            }
         },
         reset: (state) => {
-            state.value = 0
-        }
-    }
-})
+            state.value = 0;
+            state.error = "";
+        },
 
-export const {increment, decrement, incrementByValue, changeColor, reset} = counterSlice.actions
+    }
+});
+
+
+
+export const {increment, decrement, incrementByValue, decrementByValue, reset} = counterSlice.actions
 export default counterSlice.reducer
